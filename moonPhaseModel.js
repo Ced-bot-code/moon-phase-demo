@@ -50,9 +50,7 @@ function getPhaseKey(p) {
  * @param {number} perigee - The size of the Moon at perigee (default: 95)
  * 
  */
-/**
- * function drawMoon - Fixed version to remove artifacts at 0 and 1 phase.
- */
+
 function drawMoon(canvasId, inputs, apogee = 75, perigee = 95) {
   const canvas = document.getElementById(canvasId);
   const ctx = canvas.getContext("2d");
