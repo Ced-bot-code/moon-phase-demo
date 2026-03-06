@@ -13,7 +13,21 @@
 <meta property="og:description" content="Interactive lunar phase simulator using JavaScript Canvas.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://ced-bot-code.github.io/moon-phase-visualizer/">
-
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "SoftwareApplication",
+ "name": "Moon Phase Visualizer",
+ "applicationCategory": "Astronomy Software",
+ "operatingSystem": "Web Browser",
+ "author": {
+   "@type": "Person",
+   "name": "Cedie Camomot"
+ },
+ "url": "https://ced-bot-code.github.io/moon-phase-visualizer/",
+ "description": "Interactive Moon phase simulator built with JavaScript Canvas."
+}
+</script>
 <style>
   body {
     background: #000;
@@ -66,40 +80,77 @@
     margin-bottom: 10px;
   }
   hr { border: 0; border-top: 1px solid #333; margin: 20px 0; }
+.github-link {
+  color: #00d4ff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.github-link:hover {
+  text-decoration: underline;
+  color: #00ffff;
+}
 </style>
 </head>
 <body>
-  <h2>Moon phase</h2>
+
+  <header>
+  <h1>Moon Phase Visualizer</h1>
+  <p>An interactive Moon phase visualizer that lets users explore how the Moon appears at different phases. Use the sliders to adjust phase, rotation, distance, and altitude to see the illuminated portion of the Moon change. Note: This is a visual simulation only and does not calculate actual Moon phases for specific dates.
+ </p> </header>
   
-  <canvas id="canvasId" width="300" height="300"></canvas>
-  
-  <div class="controls">
+  <main>
+  <section aria-label="Moon phase visualization">
+    <canvas id="canvasId" width="300" height="300"></canvas>
+  </section>
+  <section class="controls" aria-label="Moon phase controls">
     <span id="disp">New Moon</span>
-    
-    <label>Phase
+    <label for="phase">Phase
       <input type="range" min="0" max="1" step="0.0000001" id="phase" value="0.25">
     </label>
-
-    <label>Rotation
+    <label for="angle">Rotation
       <input type="range" min="0" max="360" step="1" id="angle" value="0">
     </label>
-
-    <label>Distance (km)
+    <label for="distance">Distance (km)
       <input type="range" min="356400" max="406700" step="100" id="distance" value="384400">
     </label>
-
-    <label>Altitude
+    <label for="altitude">Altitude
       <input type="range" min="-90" max="90" step="1" id="altitude" value="45">
     </label>
-  </div>
-
-  <div class="info-panel">
+  </section>
+  <section class="info-panel">
     <div id="details"></div>
     <hr>
-    <h3>About This Implementation</h3>
-    <p>Developed using a pure and raw JS Canvas API</p>
-    <p>Created by <strong>Cedie Camomot. See license for details</strong></p>
-  </div>
+    <article>
+    <h2>About This Moon Phase Visualizer</h2>
+    <p>
+    The appearance of the Moon changes throughout its orbit around Earth.
+    Depending on the relative position between the Sun, Earth, and Moon,
+    different portions of the lunar surface become illuminated as seen
+    from our planet.
+    </p>
+    <p>
+    This Moon Phase Visualizer provides a simple interactive way to explore
+    how these changes look. The sliders allow manual adjustment of the
+    phase, orientation, distance, and altitude to demonstrate how the
+    illuminated portion of the Moon can vary in appearance.
+    </p>
+    <p>
+    The rendering is created using the HTML5 Canvas API with pure
+    JavaScript, focusing on lightweight and direct graphical
+    implementation without external libraries.
+    </p>
+    <p>
+    If you would like to explore or use this Moon Phase Visualizer, you can access the full source code and project files on my GitHub repository:
+    <a class="github-link" href="https://github.com/ced-bot-code/moon-phase-visualizer" target="_blank" rel="noopener noreferrer">Moon Phase Visualizer on GitHub</a>.
+    </p>
+    </article>
+  </section>
+  </main>
+  <footer>
+  <p>Copyright &copy; 2026 Cedie Camomot • <a href="github-link">Ced-bot-code</a></p>
+  </footer>
 <script src="moonPhaseModel.js"></script>
 <script>
 
