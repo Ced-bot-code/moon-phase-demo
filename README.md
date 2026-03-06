@@ -61,7 +61,108 @@ Developers are encouraged to customize or extend the function to suit their own 
 
 - HTML5  
 - CSS3  
-- JavaScript (Canvas API)  
+- JavaScript (Canvas API)
+
+## 🤝 Contributing
+
+Contributions are welcome! If you'd like to improve the **Moon Phase Visualizer**, add features, fix bugs, or enhance the documentation, feel free to contribute.
+
+### How to Contribute
+
+1. **Fork the repository** to your own GitHub account.
+
+2. **Clone your fork locally**
+
+```bash
+git clone https://github.com/your-username/moon-phase-visualizer.git
+cd moon-phase-visualizer
+```
+
+3. **Create a new branch for your changes**
+
+```bash
+git checkout -b moon-visual
+```
+
+Example:
+
+```bash
+git checkout -b moon-visual
+```
+
+4. **Make your changes**
+
+Possible areas for contribution:
+- Improve Moon rendering accuracy
+- UI/UX improvements
+- Performance optimizations
+- Astronomical calculations
+- Documentation updates
+
+5. **Commit your changes**
+
+
+```bash
+git add .
+git commit -m "Updated 0110 Improve moon shading algorithm"
+```
+Example "Updated HHMM Changes you made
+
+6. **Push your branch**
+
+```bash
+git push origin moon-visual
+```
+
+7. **Open a Pull Request**
+
+Go to the original repository on GitHub and create a **Pull Request** describing the changes you made.
+
+---
+
+### 💡 Contribution Ideas
+
+If you're looking for ways to contribute, here are some ideas:
+
+- Add **real lunar cycle calculations**
+- Improve **lighting and shading realism**
+- Add **Moon surface textures**
+- Implement **time-based Moon movement**
+- Improve **mobile UI controls**
+- Add **dark mode or themes**
+- Add **educational labels for Moon phases**
+
+---
+
+### 📜 Code Guidelines
+
+- Keep the project **lightweight and dependency-free**
+- Write **clean and readable JavaScript**
+- Document significant changes
+- Ensure compatibility on **desktop and mobile**
+
+---
+
+### 🐞 Reporting Issues
+
+If you find a bug or want to suggest a feature:
+
+1. Open an **Issue** on GitHub
+2. Clearly describe the problem or suggestion
+3. Include screenshots if possible
+
+---
+
+### 👥 Contributors
+
+Thanks to everyone who contributes to improving this project!
+
+You can view the list of contributors on the repository’s **Contributors** page.
+
+---
+
+⭐ If you find this project useful, consider giving it a star on GitHub!
+
 
 ## Author
 
