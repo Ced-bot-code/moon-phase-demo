@@ -82,7 +82,7 @@
     <span id="disp">New Moon</span>
     
     <label>Phase
-      <input type="range" min="0" max="1" step="0.001" id="phase" value="0.25">
+      <input type="range" min="0" max="1" step="0.0000001" id="phase" value="0.25">
     </label>
 
     <label>Rotation
@@ -124,8 +124,9 @@ function initializeAnimation() {
   drawMoon("canvasId", sliders);
     // Logic for Labels and Info
 
-  const key = getPhaseKey(p);
-  const illum = p <= 0.5 ? (p / 0.5) * 100 : ((1 - p) / 0.5) * 100;
+  const kNum = parseFloat(sliders.phase.value);
+  const key = getPhaseKey(kNum);
+  const illum = kNum <= 0.5 ? (kNum / 0.5) * 100 : ((1 - kNum) / 0.5) * 100;
   const AppAltitude = parseFloat(sliders.altitude.value);
   const curdist = parseFloat(sliders.distance.value);
   disp.innerHTML = `${key}`;
@@ -139,8 +140,8 @@ function initializeAnimation() {
 // Event Listeners
 Object.values(sliders).forEach(s => s.addEventListener("input", initializeAnimation));
 
-// Initial Draw
-drawMoon("canvasId", sliders);
+// Initial animation setup
+initializeAnimation();
 </script>
 
 </body>
