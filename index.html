@@ -31,7 +31,6 @@
     background: radial-gradient(circle, #111 0%, #000 70%);
     display: block;
     margin: 20px auto;
-    border-radius: 50%;
     box-shadow: 0 0 50px rgba(255,255,255,0.05);
     width: 90%;
     max-width: 300px;
@@ -77,7 +76,7 @@
 
   <h2>Moon phase</h2>
   
-  <canvas id="canvas" width="300" height="300"></canvas>
+  <canvas id="canvasId" width="300" height="300"></canvas>
   
   <div class="controls">
     <span id="disp">New Moon</span>
@@ -108,8 +107,7 @@
   </div>
 <script src="moonPhaseModel.js"></script>
 <script>
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
+
 const disp = document.getElementById("disp");
 const details = document.getElementById("details");
 
@@ -120,11 +118,29 @@ const sliders = {
   altitude: document.getElementById("altitude")
 };
   
+function initializeAnimation() {
+
+  // Draw the Moon based on current slider values
+  drawMoon("canvasId", sliders);
+    // Logic for Labels and Info
+
+  const key = getPhaseKey(p);
+  const illum = p <= 0.5 ? (p / 0.5) * 100 : ((1 - p) / 0.5) * 100;
+  const AppAltitude = parseFloat(sliders.altitude.value);
+  const curdist = parseFloat(sliders.distance.value);
+  disp.innerHTML = `${key}`;
+  details.innerHTML = `
+    Illumination: <strong>${illum.toFixed(2)}%</strong><br>
+    Distance: <strong>${curdist.toLocaleString()} km</strong><br>
+    Altitude: <strong>${AppAltitude}°</strong>
+  `;
+}
+
 // Event Listeners
-Object.values(sliders).forEach(s => s.addEventListener("input", drawMoon));
+Object.values(sliders).forEach(s => s.addEventListener("input", initializeAnimation));
 
 // Initial Draw
-drawMoon();
+drawMoon("canvasId", sliders);
 </script>
 
 </body>

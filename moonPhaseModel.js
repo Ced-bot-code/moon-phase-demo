@@ -15,6 +15,7 @@
  *
  */
 
+// List of Moon phase names corresponding to the 8 phases
 const phaseNames = [
   'New Moon',
   'Waxing Crescent',
@@ -26,21 +27,44 @@ const phaseNames = [
   'Waning Crescent'
 ];
 
+/**
+ * getPhaseKey - Returns the phase name based on the phase value (0 to 1)
+ * 
+ * @param {number} - Phase value (0 to 1) where 0 is New Moon and 1 is just before the next New Moon
+ * @returns {string} Phase name based on the phase value (0 to 1)
+ * 
+ */
+
 function getPhaseKey(p) {
   let index = Math.floor(((p + 0.0625) % 1) * 8);
   return phaseNames[index];
 }
 
-function drawMoon() {
-  const p = parseFloat(sliders.phase.value);
-  const angle = parseFloat(sliders.angle.value);
-  const dist = parseFloat(sliders.distance.value); // Kining dist karon kay in km na
-  const alt = parseFloat(sliders.altitude.value);
+/**
+ * function drawMoon - Draws the Moon on a canvas based on the given parameters
+ * 
+ * @param {string} canvasId - The ID of the canvas element
+ * @param {Object} sliders - The slider elements for adjusting Moon parameters
+ * @param {number} apogee - The size of the Moon at apogee (default: 75)
+ * @param {number} perigee - The size of the Moon at perigee (default: 95)
+ * 
+ */
+function drawMoon(canvasId, sliders, apogee = 75, perigee = 95) {
+  const canvas = document.getElementById(canvasId)
+        , ctx = canvas.getContext("2d") 
 
-  const minRadius = 75; // Size at Apogee
-  const maxRadius = 95; // Size at Perigee
+        , p = parseFloat(sliders.phase.value)      // Phase (0 to 1)
+        , angle = parseFloat(sliders.angle.value)  // Rotation angle in degrees
+        , dist = parseFloat(sliders.distance.value)// Distance from Earth in km
+        , alt = parseFloat(sliders.altitude.value) // Altitude in degrees
+
+  const minRadius = apogee; // Size at Apogee
+  const maxRadius = perigee; // Size at Perigee
+
+  // Linear interpolation of radius based on distance (356,400 km to 406,700 km)
   const radius = maxRadius - ((dist - 356400) / (406700 - 356400)) * (maxRadius - minRadius);
 
+  // Adjust brightness based on altitude (dim when below horizon)
   const light = alt < 0 ? "#444" : "#e1e2e3"; // Mas natural nga dimming
   const dark = alt < 0 ? "#050505" : "#222";
 
@@ -61,18 +85,36 @@ function drawMoon() {
 
   // Primary Semi-circle (Light part)
   ctx.beginPath();
-  if (p <= 0.5) {
-    ctx.arc(0, 0, radius, -Math.PI / 2, Math.PI / 2, false); // Right side
-  }
-  else{
-    ctx.arc(0, 0, radius, Math.PI / 2, -Math.PI / 2, false); // Left side
-  }
+
+  // Depending on the phase, we draw the light part on the right or left side
+                                   
+  /**
+   *  If the phase is <= 0.5, the light part is on the right side (from -90° to 90°) at Eastern part of horizon.
+   *  Otherwise, the light part is on the left side (from 90° to -90°) at Western part of horizon.
+   *  This creates the correct orientation for the Moon phases as they appear in the sky.
+   *  The use of Math.PI / 2 and -Math.PI / 2 ensures that the light part is correctly positioned based on the phase value.
+   *  The false parameter indicates that we are drawing in a clockwise direction, which is important for the correct rendering of the phases.
+   *  
+   *  For example:
+   *  - At New Moon (p = 0), the light part is on the right side, creating a crescent shape.
+   *  - At First Quarter (p = 0.25), the light part is exactly half of the circle, creating a half-moon shape.
+   *  - At Full Moon (p = 0.5), the light part covers the entire circle, creating a full moon shape.
+   *  - At Last Quarter (p = 0.75), the light part is on the left side, creating another half-moon shape but in reverse
+   * 
+   */
+
+  const EasternPhase = [0, 0, radius, -Math.PI / 2, Math.PI / 2, false]
+       , WesternPhase = [0, 0, radius, Math.PI / 2, -Math.PI / 2, false]
+       , phaseElement = p <= 0.5 ? EasternPhase : WesternPhase;
+
+  ctx.arc(...phaseElement)
   ctx.fillStyle = light;
   ctx.fill();
 
   // Terminator (The Ellipse that creates the phase effect)
   let s = Math.cos(p * 2 * Math.PI);
   let rx = Math.abs(s) * radius;
+
   ctx.beginPath();
   ctx.ellipse(0, 0, rx, radius, 0, 0, Math.PI * 2);
   
@@ -86,15 +128,4 @@ function drawMoon() {
   
   ctx.restore();
 
-  // Logic for Labels and Info
-  const key = getPhaseKey(p);
-  const illum = p <= 0.5 ? (p / 0.5) * 100 : ((1 - p) / 0.5) * 100;
-
-  disp.innerHTML = `${key}`;
-  details.innerHTML = `
-    Illumination: <strong>${illum.toFixed(2)}%</strong><br>
-    Distance: <strong>${dist.toLocaleString()} km</strong><br>
-    Altitude: <strong>${alt}°</strong>
-  `;
 }
-
