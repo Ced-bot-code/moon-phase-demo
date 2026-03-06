@@ -29,7 +29,7 @@ The Moon dims automatically when placed below the horizon (altitude < 0°), mimi
 ## Getting Started
 
 1. Clone or download the repository.
-2. Open `test.html` in any modern web browser.
+2. Open `index.html` in any modern web browser.
 3. Use the sliders in the **control panel** to adjust the Moon’s appearance:
    - **Phase** – Changes the illuminated portion of the Moon.
    - **Rotation** – Rotates the Moon’s orientation.
