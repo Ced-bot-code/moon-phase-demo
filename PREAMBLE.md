@@ -1,9 +1,9 @@
 PREAMBLE
 
-This Moon Phase Demo is a fully original implementation built from scratch using the HTML5 Canvas API and JavaScript.
+This Moon Phase Demo is an original implementation built from scratch using the HTML5 Canvas API and JavaScript.
 
-It provides an accurate simulation of the Moon’s illuminated portion with interactive sliders for phase, rotation, distance, and altitude.
+It simulates the Moon’s illuminated portion with interactive controls for phase, rotation, distance, and altitude.
 
-This project strictly follows the fundamental laws of nature and physics. All calculations and visual representations are derived from established astronomical principles and mathematical models to ensure accuracy and consistency with real-world celestial mechanics. In particular, the lunar terminator is rendered using trigonometric projections, providing a more mathematically rigorous representation compared to traditional linear-mapping approximations.
+The model is based on established astronomical geometry and trigonometric principles, providing a realistic approximation of the lunar phase and terminator. Also it is rendered using trigonometric projection techniques, offering a more geometrically consistent approach.
 
-All calculations, drawing logic, and controls are independently created for precision and clarity.
+All calculations, rendering logic, and interface controls were independently developed, with a focus on clarity, and educational value.
