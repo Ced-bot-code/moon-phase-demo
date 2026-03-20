@@ -2,7 +2,7 @@
  * Copyright (C) 2026 Cedie Camomot
  * All rights reserved.
  *
- * Moon Phase Visualizer - A simple tool to visualize the Moon's phases based on adjustable parameters.
+ * Moon Phase Demo - A simple tool to visualize the Moon's phases based on adjustable parameters.
  * 
  * Built with JavaScript and HTML Canvas.
  * Allows adjustable phase, rotation, distance, and altitude.
@@ -37,14 +37,16 @@ const phaseNames = [
  */
 
 function getPhaseKey(p) {
+  // Formula is an approximate form, not intended for precise or high accurate calculation
   let index = Math.floor(((p + 0.0625) % 1) * 8);
+ 
   return phaseNames[index];
 }
 
 /**
  * function drawMoon - Draws the Moon on a canvas based on the given parameters
  * 
- * @param {string} canvasId - The ID of the canvas element
+ * @param {string} canvasId - The ID value of the canvas element
  * @param {Object} inputs - The "inputs" elements for adjusting Moon parameters
  * @param {number} apogee - The size of the Moon at apogee (default: 75)
  * @param {number} perigee - The size of the Moon at perigee (default: 95)
@@ -52,22 +54,22 @@ function getPhaseKey(p) {
  */
 
 function drawMoonPhase(canvasId, inputs, apogee = 75, perigee = 95) {
-  const canvas = document.getElementById(canvasId);
-  const ctx = canvas.getContext("2d");
+  const canvas = document.getElementById(canvasId)
+      , ctx = canvas.getContext("2d")
 
   // Parse the input values for phase, angle, distance, and altitude
-  const phaseNum = parseFloat(inputs.phase.value);
-  const rotation = parseFloat(inputs.rotation.value);
-  const dist = parseFloat(inputs.distance.value);
-  const alt = parseFloat(inputs.altitude.value);
+      , phaseNum = parseFloat(inputs.phase.value)
+      , rotation = parseFloat(inputs.rotation.value)
+      , dist = parseFloat(inputs.distance.value)
+      , alt = parseFloat(inputs.altitude.value);
 
   // Calculate the radius of the Moon based on its distance from Earth, interpolating between apogee and perigee sizes
-  const radius = Math.round(perigee - ((dist - 356400) / (406700 - 356400)) * (perigee - apogee));
+  const radius = Math.round(perigee - ((dist - 356400) / (406700 - 356400)) * (perigee - apogee))
 
-  // Determine the colors for the light and dark sides of the Moon based on its altitude. The Moon appears dimmer when it's below the horizon (altitude < 0°).
-  const MOON_BELOW_HORIZON_ALTITUDE= -0.125;
-  const light = alt < MOON_BELOW_HORIZON_ALTITUDE ? "#333" : "#e1e2e3";
-  const dark = alt < MOON_BELOW_HORIZON_ALTITUDE ? "#050505" : "#111";
+  // The Moon appears dimmer when it's below the horizon (altitude < 0°).
+        , MOON_BELOW_HORIZON_ALTITUDE= -0.125
+        , light = alt < MOON_BELOW_HORIZON_ALTITUDE ? "#333" : "#e1e2e3"
+        , dark = alt < MOON_BELOW_HORIZON_ALTITUDE ? "#050505" : "#111";
   
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -85,14 +87,15 @@ function drawMoonPhase(canvasId, inputs, apogee = 75, perigee = 95) {
 
   // Draw the light part of the Moon based on the phase
   let s = Math.cos(phaseNum * 2 * Math.PI);
-  let rx = Math.round(Math.abs(s) * radius-0.00002322); // Subtract a tiny value to prevent artifacts at 0 and 1 phase
+ 
+  // Formula to calculate the horizontal radius of the Moon 
+  let rx = Math.round(Math.abs(s) * radius-0.00002322);
 
   ctx.beginPath();
-
-  // Depending on the phase, we draw the light on either the Eastern or Western side of the Moon
-  const EASTERN_LIGHT = [0, 0, radius, -Math.PI / 2, Math.PI / 2, false]; // (0 to 0.5) - Light at the Eastern side of horizon
-  const WESTERN_LIGHT = [0, 0, radius, Math.PI / 2, -Math.PI / 2, false]; // (0.5 to 1) - Light at the Western side of horizon
-  const PORTION = phaseNum <= 0.5 ? EASTERN_LIGHT : WESTERN_LIGHT;
+  
+  const EASTERN_LIGHT = [0, 0, radius, -Math.PI / 2, Math.PI / 2, false] // (0 to 0.5) - Light begin at the Eastern side of horizon
+      , WESTERN_LIGHT = [0, 0, radius, Math.PI / 2, -Math.PI / 2, false] // (0.5 to 1) - Light ends at the Western side of horizon
+      , PORTION = phaseNum <= 0.5 ? EASTERN_LIGHT : WESTERN_LIGHT;
   
   ctx.arc(...PORTION);
   ctx.fillStyle = light;
@@ -102,6 +105,7 @@ function drawMoonPhase(canvasId, inputs, apogee = 75, perigee = 95) {
   ctx.beginPath();
   ctx.ellipse(0, 0, rx, radius + 0.5, 0, 0, Math.PI * 2);
 
+  // Helpers
   const brightNess = (phaseNum <= 0.25 || phaseNum >= 0.75) ? dark : light;
 
   // Fill the terminator with the appropriate brightness to create a smoother transition between the light and dark sides of the Moon
