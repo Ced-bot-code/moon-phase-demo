@@ -81,7 +81,7 @@ function drawMoonPhase(canvasId, inputs, apogee = 75, perigee = 95) {
   ctx.rotate(rotation * Math.PI / 180);
 
   ctx.beginPath();
-  ctx.arc(0, 0, radius+0.5, 0, Math.PI * 2);
+  ctx.arc(0, 0, radius, 0, Math.PI * 2);
   ctx.fillStyle = dark;
   ctx.fill();
 
@@ -89,7 +89,7 @@ function drawMoonPhase(canvasId, inputs, apogee = 75, perigee = 95) {
   let s = Math.cos(phaseNum * 2 * Math.PI);
  
   // Formula to calculate the horizontal radius of the Moon 
-  let rx = Math.round(Math.abs(s) * radius-0.00002322);
+  let rx = Math.round(Math.abs(s) * radius);
 
   ctx.beginPath();
   
@@ -103,7 +103,7 @@ function drawMoonPhase(canvasId, inputs, apogee = 75, perigee = 95) {
  
   // Draw the terminator (the line between the light and dark sides) as an ellipse to create a smoother transition
   ctx.beginPath();
-  ctx.ellipse(0, 0, rx, radius + 0.5, 0, 0, Math.PI * 2);
+  ctx.ellipse(0, 0, rx, radius, 0, 0, Math.PI * 2);
 
   // Helpers
   const brightNess = (phaseNum <= 0.25 || phaseNum >= 0.75) ? dark : light;
