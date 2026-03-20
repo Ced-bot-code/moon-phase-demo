@@ -67,6 +67,7 @@ function drawMoonPhase(canvasId, inputs, apogee = 75, perigee = 95) {
   const radius = Math.round(perigee - ((dist - 356400) / (406700 - 356400)) * (perigee - apogee))
 
   // The Moon appears dimmer when it's below the horizon (altitude < 0°).
+  // Moon's mean altitude at the below horizon
         , MOON_BELOW_HORIZON_ALTITUDE= -0.125
         , light = alt < MOON_BELOW_HORIZON_ALTITUDE ? "#333" : "#e1e2e3"
         , dark = alt < MOON_BELOW_HORIZON_ALTITUDE ? "#050505" : "#111";
@@ -86,10 +87,10 @@ function drawMoonPhase(canvasId, inputs, apogee = 75, perigee = 95) {
   ctx.fill();
 
   // Draw the light part of the Moon based on the phase
-  let s = Math.cos(phaseNum * 2 * Math.PI);
+  let phaseKNum = Math.cos(phaseNum * 2 * Math.PI);
  
   // Formula to calculate the horizontal radius of the Moon 
-  let rx = Math.round(Math.abs(s) * radius);
+  let terminator_k = Math.round(Math.abs(phaseKNum) * radius);
 
   ctx.beginPath();
   
@@ -103,14 +104,14 @@ function drawMoonPhase(canvasId, inputs, apogee = 75, perigee = 95) {
  
   // Draw the terminator (the line between the light and dark sides) as an ellipse to create a smoother transition
   ctx.beginPath();
-  ctx.ellipse(0, 0, rx, radius, 0, 0, Math.PI * 2);
+  ctx.ellipse(0, 0, terminator_k, radius, 0, 0, Math.PI * 2);
 
   // Helpers
   const brightNess = (phaseNum <= 0.25 || phaseNum >= 0.75) ? dark : light;
 
   // Fill the terminator with the appropriate brightness to create a smoother transition between the light and dark sides of the Moon
   ctx.fillStyle = brightNess;
-  ctx.globalCompositeOperation = 'source-over'; // Sigurado nga ang terminator ma-apply sa ibabaw
+  ctx.globalCompositeOperation = 'source-over';
   ctx.fill();
   ctx.restore();
 
