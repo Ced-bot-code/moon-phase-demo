@@ -108,6 +108,7 @@ function drawMoonPhase(canvasId, inputs, apogee = 75, perigee = 95) {
 
   // Helpers
   const brightNess = (phaseNum <= 0.25 || phaseNum >= 0.75) ? dark : light;
+  ctx.globalCompositeOperation = 'source-over';
 
   // Fill the terminator with the appropriate brightness to create a smoother transition between the light and dark sides of the Moon
   ctx.fillStyle = brightNess;
